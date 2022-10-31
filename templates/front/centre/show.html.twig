@@ -1,0 +1,82 @@
+{% extends 'front_base.html.twig' %}
+
+{% block title %}Centre{% endblock %}
+
+{% block body %}
+    <link rel="stylesheet" href="{{ asset('front/plugins/themify-icons/themify-icons.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('front/styles/single_styles.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('front/styles/single_responsive.css') }}">
+
+
+
+        <div class="container single_product_container">
+            <div class="row">
+
+            </div>
+            <div class="col-lg-5">
+                <div class="product_details">
+                    <div class="product_details_title">
+                        <h2>{{ centre.nom }}</h2>
+                        <h4>{{ centre.email }}</h4>
+                        <p>{{ centre.description }}</p>
+                    </div>
+                    <p>ouvre à <strong><span
+                                    style="color: red">{{ centre.horaire ? centre.horaire|date('H:i:s') : '' }}</span></strong>
+                    </p>
+                    <div class="free_delivery d-flex flex-row align-items-center justify-content-center">
+
+                    </div>
+                    <br>
+
+                    <div id="carte1" style="height: 300px; width: 300px;">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    {% block stylesheets %}
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+                                  integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+                                  crossorigin=""/>
+    {% endblock %}
+    {% block javascripts %}
+        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+                integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+                crossorigin=""></script>
+        <script type="text/javascript">
+
+            var adresse=document.getElementById("adresse");
+            var centerview=[36.7949999,10.0732378];
+            var map = L.map('carte1').setView([centerview[0], centerview[1]], 6);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+
+            var popup = L.popup()
+                .setLatLng([{{ centre.localisation }}])
+                .setContent( '{{ centre.nom }} <h6>Hello world!<br />This is a nice popup.</h6>')
+                .openOn(map);
+            function onMapClick(e) {
+                popup
+                    .setLatLng(e.latlng)
+                    .setContent("You clicked the map at " + e.latlng.toString())
+                    .openOn(map);
+            }
+
+            mymap.on('click', onMapClick);
+            var polygon = L.polygon([
+                [51.509, -0.08],
+                [51.503, -0.06],
+                [51.51, -0.047]
+            ]).addTo(map);
+        </script>
+    {% endblock %}
+
+
+{% endblock %}

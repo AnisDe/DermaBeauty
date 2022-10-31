@@ -1,0 +1,28 @@
+{% extends 'back_base.html.twig' %}
+{% block title %}modifier formulaire{% endblock %}
+
+{% block body %}
+    {{ form_start(f,{'attr':{'novalidate':'novalidate'}}) }}
+    <h1>modifier formulaire</h1>
+    {{ form_label(f.ref,"ref") }}
+    {{ form_widget(f.ref) }}
+    {{ form_label(f.cin,"cin") }}
+    {{ form_widget(f.cin) }}
+    {{ form_label(f.quest1,"ton age") }}
+    {{ form_widget(f.quest1) }}
+    {{ form_label(f.quest2,"tes problemes ") }}
+    {{ form_widget(f.quest2) }}
+    {{ form_label(f.quest3,"des interventions chirugicales") }}
+    {{ form_widget(f.quest3) }}
+    {{ form_label(f.quest4,"besoins?") }}
+    {{ form_widget(f.quest4) }}
+    {{ form_label(f.quest5,"marque preferé") }}
+    {{ form_widget(f.quest5) }}
+    {{ form_label(f.quest6,"pays") }}
+    {{ form_widget(f.quest6) }}
+    {{ form_label(f.type,"type") }}
+    {{ form_widget(f.type) }}
+    {{ form_label(f.FormCateg,"form_categ") }}
+    {{ form_widget(f.FormCateg)}}
+    {{ form_end(f) }}
+{% endblock %}

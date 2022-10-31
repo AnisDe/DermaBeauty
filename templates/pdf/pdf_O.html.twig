@@ -1,0 +1,62 @@
+<html>
+{% block stylesheets %}
+    <link href="{{  asset('back/css/sb-admin-2.css')}}" media="dompdf" rel="stylesheet">
+    <style>
+        h2{
+            font-family: "Charlemagne Std";
+            background-color: lightgrey;
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        table{
+            width: max-content;
+        }
+
+    </style>
+{% endblock %}
+
+
+
+{% block body %}
+    <center>
+        <h2> ordonnance redigé parle docteur : {{ ordo.nomderma }} </h2>
+        <center>
+        <table  >
+
+            <thead>
+            <br>
+            <tr>
+            <th>ref</th>
+            <th>remarques</th>
+            <th>date redaction</th>
+            <th>date expiration</th>
+
+
+            </tr>
+              </thead>
+            <tbody  >
+
+            <tr>
+                <td>{{ ordo.reference }}</td>
+                <td>{{ ordo.remarques }}</td>
+                <td>{{ ordo.datered|date("Y/m/d")}}</td>
+                <td>{{ ordo.datelimite|date("Y/m/d") }}</td>
+
+
+            </tr>
+            </tbody>
+        </table>
+    </center>
+
+
+
+
+{% endblock %}
+</html>

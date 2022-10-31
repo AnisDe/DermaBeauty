@@ -1,0 +1,34 @@
+{% extends 'back_base.html.twig' %}
+
+
+{% block body %}
+    <title>CategorieCentre</title>
+    <h1>CategorieCentre</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ categorie_centre.id }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ categorie_centre.type }}</td>
+            </tr>
+            <tr>
+                <th>Specialite</th>
+                <td>{{ categorie_centre.specialite }}</td>
+            </tr>
+            <tr>
+                <th>Localisation</th>
+                <td>{{ categorie_centre.localisation }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('categorie_centre_index') }}">back to list</a>
+
+    <a href="{{ path('categorie_centre_edit', {'id': categorie_centre.id}) }}">edit</a>
+
+    {{ include('categorie_centre/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'back_base.html.twig' %}
+{% block title %}modifier categorie{% endblock %}
+
+{% block body %}
+    <h1>modifier categorie</h1>
+    {{ form_start(f,{'attr':{'novalidate':'novalidate'}}) }}
+
+    {{ form_errors(f.id_cat) }}
+    {{ form_label(f.id_cat,"id_categorie") }}
+    {{ form_widget(f.id_cat) }}
+
+    {{ form_label(f.nom,"nom") }}
+    {{ form_widget(f.nom) }}
+
+    {{ form_label(f.type,"type") }}
+    {{ form_widget(f.type) }}
+
+    <br>
+    {{ form_end(f) }}
+{% endblock %}

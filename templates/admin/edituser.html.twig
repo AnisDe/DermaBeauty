@@ -1,0 +1,20 @@
+{% extends 'back_base.html.twig' %}
+
+{% block title %}Modifier un utilisateur{% endblock %}
+
+{% block body %}
+    <h1>Modifier un utilisateur</h1>
+    {{ form_start(form,{'attr':{'novalidate':'novalidate'}}) }}
+    {{ form_row(form.cin) }}
+    {{ form_row(form.nom) }}
+    {{ form_row(form.prenom) }}
+    {{ form_row(form.email) }}
+    {{ form_row(form.roles) }}
+    {{ form_row(form.adresse) }}
+    {{ form_row(form.numero) }}
+    {{ form_row(form.password, {
+        label: 'Password'
+    }) }}
+    {{ form_end(form) }}
+
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'back_base.html.twig' %}
+
+{% block title %}ajout ordonnance{% endblock %}
+
+{% block body %}
+    <h1>ajout ordonnance</h1>
+
+    {{ form_start(form,{'attr':{'novalidate':'novalidate'}}) }}
+    {{ form_label(form.reference,"reference") }}
+    {{ form_widget(form.reference) }}
+    {{ form_label(form.remarques,"remarques") }}
+    {{ form_widget(form.remarques) }}
+    {{ form_label(form.date_red,"date redaction") }}
+    {{ form_widget(form.date_red) }}
+    {{ form_label(form.date_limite,"date limite ") }}
+    {{ form_widget(form.date_limite) }}
+    {{ form_label(form.nom_derma,"nom du dermatologue") }}
+    {{ form_widget(form.nom_derma) }}
+    {{ form_label(form.email,"email du patient") }}
+    {{ form_widget(form.email) }}
+
+    {{ form_end(form) }}
+{% endblock %}

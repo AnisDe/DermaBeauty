@@ -1,0 +1,776 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('front/plugins/themify-icons/themify-icons.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('front/plugins/jquery-ui-1.12.1.custom/jquery-ui.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('front/styles/contact_styles.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('front/styles/contact_responsive.css') }}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('front/styles/bootstrap4/gref.css') }}">
+
+
+    <style>
+        .button_sujet {
+            background-color: #ddd;
+            border: none;
+            color: black;
+
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            margin: 2px;
+            cursor: pointer;
+
+            font-family: inherit;
+
+            font-size: 10px;
+            height: 18px;
+            padding: 0 5px;
+            font-weight: 400;
+            line-height: 18px;
+            border-radius: 3px;
+        }
+
+        .button_sujet:hover {
+            background-color: #f1f1f1;
+        }
+        .button_delete_rep {
+            background-color: red;
+            border: none;
+            color: black;
+
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            margin: 2px;
+            cursor: pointer;
+
+            font-family: inherit;
+
+            font-size: 10px;
+            height: 18px;
+            padding: 0 5px;
+            font-weight: 400;
+            line-height: 18px;
+            border-radius: 3px;
+        }
+
+        .button_delete_rep:hover {
+            background-color: #f1f1f1;
+        }
+        .button_edit_rep {
+            background-color: green;
+            border: none;
+            color: black;
+
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            margin: 2px;
+            cursor: pointer;
+
+            font-family: inherit;
+
+            font-size: 10px;
+            height: 18px;
+            padding: 0 5px;
+            font-weight: 400;
+            line-height: 18px;
+            border-radius: 3px;
+        }
+
+        .button_edit_rep:hover {
+            background-color: #f1f1f1;
+        }
+
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            background: rgba(0,0,0,0.8);
+        }
+
+        .popup.active {
+            display: inline-block;
+        }
+
+        .popup-content {
+            position: fixed;
+            left: 50%;
+            top: 5%;
+            transform: translateX(-50%);
+            height: 640px;
+            max-height: 80%;
+            min-width: 520px;
+            width: 45%;
+            border: 1px solid rgb(22, 22, 22);
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            transition: top 250ms linear, opacity 200ms linear;
+        }
+
+        .popup-content.active {
+            opacity: 1;
+            top: 10% !important;
+        }
+
+        .popup-header {
+            display: flex;
+            width: 100%;
+            height: 10%;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2%;
+            background-color: #fe4c50;
+            color: #eee;
+        }
+        .rounded-button {
+            box-sizing: content-box;
+            width: 37px;
+            height: 37px;
+            border-radius: 37px;
+            position: relative;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            outline: 0;
+            z-index: 0;
+        }
+
+        .popup-body {
+            height: 80%;
+            padding: 2%;
+            overflow-y: auto;
+            background-color: #eee;
+        }
+
+        .popup-footer {
+            height: 10%;
+            padding: 2%;
+            display: flex;
+            justify-content: flex-end;
+            background-color: rgb(233, 233, 233);
+        }
+        #btn_envoyer{
+
+            display: -moz-inline-box;
+            display: -ms-inline-flexbox;
+            display: -webkit-inline-flex;
+            display: inline-flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: auto;
+            height: 40px;
+
+            border-radius: 3px;
+            -webkit-transition: all 0.3s ease;
+            -moz-transition: all 0.3s ease;
+            -ms-transition: all 0.3s ease;
+            -o-transition: all 0.3s ease;
+            transition: all 0.3s ease;
+            background: #1e1e27;
+            width: 170px;
+            border: none;
+            color: #FFFFFF;
+            text-transform: uppercase;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+
+        }
+        .btn-close {
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+
+
+.emoji{
+
+    position: relative;
+    width: 40px;
+    height: 40px;
+
+    border-radius: 50%;
+    align-items: center;
+
+}
+
+        .emoji.like-btn :hover{
+
+            animation: like 1s linear infinite;
+            top: 5px;
+            left:5px;
+            transform-origin: 0% 100%;
+
+
+            position: absolute;
+            color: white;
+        }
+@keyframes like {
+    25%
+    {
+        transform: rotate(15deg);
+    }
+    50%
+    {
+        transform: rotate(-15deg) translateY(-10px);
+    }
+    75%, 100%
+    {
+        transform: rotate(0deg);
+    }
+
+}
+
+
+    </style>
+
+{% endblock %}
+{% block body %}
+
+<div class="header-placeholder"></div>
+
+    <div class="page-header contact_container topic-header">
+        <div>
+            <h1 class="h2 mb2">{{forum.titre}}</h1>
+            <div class="topic-header__meta">
+                <a href="" class="topic-header__author">
+                    <img src="{{ forum.user.makeAvatar() }}" alt="" class="rounded mr1" width="25">
+                    {{ forum.user.nom }}
+                </a>
+                <small class="topic-header__date"><time-ago time="1278356274"></time-ago>
+                    <forum-edit topic="10" owner="1219"></forum-edit>
+                    <forum-delete topic="10" owner="1219"></forum-delete>
+                </small>
+                <div class="topic-header__tags">
+                    <div class="topic-tag">
+                        <a href="https://grafikart.fr/forum/javascript-7" class="pill small pill-square pill-grey" style="background-color: #fdae3f">{{ forum.sujet.nom }}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="align-self: flex-start; flex: none;">
+            <forum-report topic="10" owner=1219 class="topic-header__actions"></forum-report>
+        </div>
+    </div>
+
+    <div class="container stack topic-page py5">
+
+        <div class="forum-message">
+            <div class="forum-message__body">
+                <div class="js-content formatted formatted">
+                    <p>Bonjour à tous,{{ forum.blog}}  </p>
+                    <p><input type="hidden" id="id_for" value="{{ forum.id }}"></p>
+                    <p>En vous remerciant de vos futures raiponces.</p>
+                </div>
+                <div class="js-forum-edit"></div>
+            </div>
+        </div>
+
+
+    <div class="mb1">
+        <h2 class="h3 mt3 mb1"> {{ forum.replies | length}} reponses </h2>
+           <hr/>
+    </div>
+    <div class="forum-messages js-replies">
+    {% include 'forum/replies.html.twig' with {replies: reps} only %}
+    </div>
+
+    {% if app.user %}
+    <div class="container ">
+        <div class="">
+            <div class="get_in_touch_contents">
+                <h5>repondre</h5>
+
+                <form action="" method="get" class="js-comment">
+                <div>
+
+
+                    <input type="text" id="input_name" name="contenu" class="emojir form_input input_name input_ph" placeholder="repondre ...">
+
+                </div>
+                <div>
+                    <button type="submit" id="btn_envoyer">repondre !</button>
+                </div>
+                </form>
+            </div>
+        </div>
+
+
+
+    </div>
+    </div>
+
+    {% endif %}
+
+{%  endblock%}
+{% block javascripts %}
+
+    <script src="{{ asset('front/plugins/jquery-ui-1.12.1.custom/jquery-ui.js') }}"></script>
+    <script src="{{ asset('front/js/contact_custom.js') }}"></script>
+
+    <script>
+    async function loadUr(url){
+        const response = await fetch(url,{
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        }).catch(function (error){
+            if(error.response.status === 403){
+                window.alert("vous avez deja signalez ce commmentaire ")
+            }
+        });
+        const data =await response.json();
+//
+//            console.log(data);
+       // const replie = document.querySelector('.js-replies')
+        const replie = data.cont;
+        const id = data.id_res;
+        const win = document.querySelector('#content_response'+id)
+        win.innerHTML = replie
+        const form_modif = document.querySelector('.js-comment_modif' + id)
+        form_modif.style.display = "none";
+        var updateStatus = document.querySelector('.update_status');
+        updateStatus.value = "0";
+
+        playMusic()
+
+
+    }
+
+    async function onSubmitComment(e) {
+        e.preventDefault()
+
+
+//        console.log('you have submitted')
+        const data = new FormData(this);
+        const params = new URLSearchParams();
+        data.forEach((value, key) => {
+
+
+            params.append(key, value)
+
+
+        })
+        const idForum = document.querySelector('#id_for').value
+        const url = 'http://127.0.0.1:8000/forum/updat/' + idForum + '/?' + params.toString() ;
+        //console.log(url)
+
+
+        return  loadUr(url)
+
+
+    }
+
+     function onModifyComment(event) {
+         event.preventDefault()
+        var updateStatus = document.querySelector('.update_status');
+
+         if(updateStatus.value === "0") {
+
+             updateStatus.value ="1";
+             const id_response = event.target.getAttribute('href')
+             const form_modif = document.querySelector('.js-comment_modif' + id_response)
+             form_modif.style.display = null;
+
+             form_modif.addEventListener('submit', onSubmitComment)
+         }
+         else{
+             window.alert("vous etes entrain de modifier un commentaire ")
+         }
+
+   }
+
+    document.querySelectorAll('a.button_edit_rep').forEach(function (btn){
+            btn.addEventListener('click',onModifyComment);
+
+
+    })
+
+
+
+
+
+</script>
+    <script>
+        function onComment(event){
+            event.preventDefault()
+            const data = new FormData(form_comment);
+            const params =new URLSearchParams();
+            data.forEach((value,key)=>{
+
+
+                params.append(key,value)
+
+
+
+            })
+            const idForum = document.querySelector('#id_for').value
+            const    url = 'http://127.0.0.1:8000/forum/show/'+ idForum + '/?'+ params.toString();
+
+             return load(url);
+
+
+        }
+        async function load(url){
+
+            const response = await fetch(url,{
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            }).catch(function (error){
+                if(error.response.status === 403){
+                    window.alert("vous avez deja signalez ce commmentaire ")
+                }
+            });
+            const data =await response.json();
+//
+            //console.log(data);
+            const replie = document.querySelector('.js-replies')
+            // create a new li node
+            let newDiv = document.createElement('div');
+            newDiv.classList.add('forum-message','is-reply') ;
+
+            // insert a new node after the first list item
+            replie.insertBefore(newDiv, replie.lastElementChild.nextSibling);
+
+            const blockHtml ='    <div class="forum-avatar"> <img class="forum-message__avatar" src="{{ app.user.makeAvatar() }}"> </div><div class="forum-message__header">  <a href="" class="forum-message__author">'+data.username+'</a><div class="pill pill-darkgrey small">Auteur  </div>  <a class="button_delete_rep" href="">supprimer  </a>       <a class="button_edit_rep"  href="'+data.id+'">editer  </a></div><div class="forum-message__actions"><div class="">   <a href="" class="js-like">   <div class="benefit_icon"><i class="fa fa-thumbs-up" aria-hidden="true"></i></div><span id="" class="js-likes"></span></a></div></div><div class="forum-message__body"> <div class="formatted card js-content p2" id="content_response'+data.id+'"><p>'+data.message+'.</p></div> <form action="" method="get" class="js-comment_modif'+data.id+'" style="display: none;"><div> <input type="text" id="input_name" name="cont" class="form_input input_name input_ph" placeholder="modifier votre reponse ..."><button type="submit" id="btn_envoyer">repondre !</button><input type="hidden" name="id_response" value="'+data.id+'"></div></form></div>'
+            newDiv.innerHTML = blockHtml;
+            playMusic()
+            window.location.reload()
+
+
+
+
+
+
+
+
+        //replie.innerHTML = data.reps
+            //playMusic()
+
+
+
+
+
+
+
+
+
+
+        }
+        const form_comment = document.querySelector('.js-comment')
+        form_comment.addEventListener('submit',onComment)
+
+        function playMusic(){
+            audioElement = document.createElement('audio')
+            audioElement.setAttribute('src','{{ asset('bub.mp3') }}')
+            audioElement.play()
+
+
+
+        }
+
+
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/emoji-button@latest/dist/index.min.js"></script>
+
+    <script>
+        var picker = new EmojiButton({
+
+            position : 'right-start'
+        })
+        picker.on('emoji',function(emoji){
+            inputImoji.value +=emoji;
+        })
+
+
+
+
+        function emojieShow(){
+                if(picker.pickerVisible){
+                    console.log('you must hide yourself')
+                    picker.hidePicker()
+                }
+                else{
+
+                    picker.showPicker(inputImoji)
+
+                }
+
+
+
+
+
+        }
+
+        const inputImoji = document.querySelector('.emojir')
+            inputImoji.addEventListener('click',emojieShow);
+
+
+
+    </script>
+
+        <script>
+
+
+
+
+            //avoir un tableau avec tous les element quui ont data-popup ref(bouton)
+            let popupsBtn = document.querySelectorAll("[data-popup-ref]");
+            //parcourir les element
+            popupsBtn.forEach((btn) => {
+            //attendere l'appuie sur le bouton
+            btn.addEventListener("click", activePopup);
+            //fonction apuie bouton
+            function activePopup() {
+            let idrep = btn.getAttribute('data-browse');
+            //la valeur de data poupup ref de tous les elemnt
+            let popupId = btn.getAttribute("data-popup-ref");
+            let popup = document.querySelector(`[data-popup-id='${popupId}']`);
+            //formid();
+            function formid(idrep){
+            const form = document.querySelector('.js-signal'+idrep);
+            const input = document.querySelector('.id_forum'+idrep)
+            const idForum = input.value
+            form.addEventListener('submit',onsubmit);
+
+
+
+            async function onsubmit(event)
+        {
+            event.preventDefault();
+
+
+
+
+            const data = new FormData(form);
+            const params =new URLSearchParams();
+            data.forEach((value,key)=>{
+
+
+            params.append(key,value)
+
+
+
+        })
+
+            const    url = 'http://127.0.0.1:8000/forum/show/'+ idForum + '/?'+ params.toString();
+
+            return load(url);
+        }
+
+
+
+
+
+
+
+            async function load(url){
+
+            const response = await fetch(url,{
+            method: 'GET',
+            headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+        }).catch(function (error){
+            if(error.response.status === 403){
+            window.alert("vous avez deja signalez ce commmentaire ")
+        }
+        });
+            const data =await response.json();
+            console.log(data);
+
+
+
+            btn.style.display="none";
+
+            onPopupClose();
+
+
+
+
+
+
+        }
+
+
+
+        }
+            //
+
+
+            if (popup !== undefined && popup !== null) {
+            //le contenue html de popup content
+            //let popupContent = popup.querySelector(".popup-content");
+            let popupContent = popup.querySelector("#contenu"+idrep);
+
+
+            //avoir un tableau de close btns tu les bouton avec data-didmiss
+            let closeBtns = popup.querySelectorAll("[data-dismiss-popup]");
+            //sur chaque appuie sur le bouton close tu va appeler la fonction on popup close
+            closeBtns.forEach((btn) => {
+            btn.addEventListener("click", onPopupClose);
+        });
+
+            popup.addEventListener("click", onPopupClose);
+
+            //pour que chaque fois on appuie sur la fenetre elle ne disparait pas
+            popupContent.addEventListener("click", (ev) => {
+            ev.stopPropagation();
+
+        });
+
+            popup.classList.add("active");
+            formid(idrep);
+            setTimeout(() => {
+            popupContent.classList.add("active");
+        }, 1);
+            function onPopupClose() {
+            setTimeout(() => {
+            popup.classList.remove("active");
+        }, 250);
+            popupContent.classList.remove("active");
+        }
+
+
+        }
+        }
+
+        });
+
+    </script>
+    <script>
+        var check_status = false;
+
+     async   function onClickBtnLike(event){
+            event.preventDefault();
+            console.log('like')
+                     const url = this.href;
+                       // const span = this.querySelector('span.js-likes')
+                        const rep_id = this.getAttribute('data-browse')
+                       const span  = document.querySelector('.js-likes'+rep_id)
+                        const icone = this.querySelector('i');
+//                        console.log(icone)
+
+          //              icone.innerText = 'thumb_up_off_alt'
+         return like(url,icone,span)
+                        /*axios.get(url).then(function (response){
+                            const likes = response.nblikes;
+                            span.textContent =likes
+                            if(icone.classList.contains('far')){
+                                icone.classList.replace('far','fa')
+                            }
+                            else{
+                                icone.classList.replace('fa','far')
+                            }
+
+                        }).catch(function (error){
+                            if(error.response.status === 403){
+                                window.alert("vous n'etes pas connecte pour reagir a un une reponse")
+                            }
+                        });*/
+
+
+
+
+        }
+        async function like(url,icone,span){
+            const response = await fetch(url,{
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            }).catch(function (error){
+                if(error.response.status === 403){
+                    window.alert("vous avez deja signalez ce commmentaire ")
+                }
+            });
+            //const span = docu.querySelector('span.js-likes')
+
+            //const icone = this.querySelector('i');
+
+            const data =await response.json();
+            const likes = data.nblikes;
+            span.textContent =likes
+            if(icone.innerText ==='thumb_up_off_alt'){
+                icone.innerText = 'thumb_up'
+
+            }
+            else{
+                icone.innerText = 'thumb_up_off_alt'
+
+            }
+            likeMusic();
+
+
+            /*   if(icone.classList.contains('far')){
+                icone.classList.replace('far','fa')
+            }
+            else{
+                icone.classList.replace('fa','far')
+            }*/
+
+
+
+            //    console.log(data)
+
+
+
+        }
+        document.querySelectorAll('a.js-like').forEach(function (link){
+
+            link.addEventListener('click',onClickBtnLike);
+
+
+        })
+        function likeMusic(){
+
+                audioElement = document.createElement('audio')
+                audioElement.setAttribute('src','{{ asset('like.mp3') }}')
+                audioElement.play()
+
+
+
+
+
+        }
+
+
+
+
+    </script>
+
+
+
+
+{% endblock %}

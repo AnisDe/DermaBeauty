@@ -1,0 +1,85 @@
+{% extends 'back_base.html.twig' %}
+
+{% block title %}forums{% endblock %}
+ {% block stylesheets %}
+
+
+     <link href="{{ asset('vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+ {% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <h1 class="h3 mb-2 text-gray-800">Tables</h1>
+        <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
+            For more information about DataTables, please visit the <a target="_blank"
+                                                                       href="https://datatables.net">official DataTables documentation</a>.</p>
+
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+
+                   <select name="trie" class="js-trie">
+                       <option value="trie par nom">trie par nom</option>
+                       <option value="trie par nom">trie par nom</option>
+
+
+                   </select>
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th>reply</th>
+                            <th>signal</th>
+                            <th>user</th>
+                            <th>nbre de signale pour reply</th>
+
+                            <th>action</th>
+
+                        </tr>
+                        </thead>
+                        <tfoot>
+                        <th>reply</th>
+                        <th>signal</th>
+                        <th>user</th>
+                        <th>action</th>
+
+                        </tfoot>
+                        <tbody>
+                        {% for f in replies %}
+                            <tr>
+                                <th>{{ f.reply.content }}</th>
+                                <th>{{ f.content}} </th>
+                                <th>{{ f.reply.user.username}}</th>
+                                <th>{{ f.reply.signals|length}}</th>
+                                <th>
+
+                                    <div style="display: inline-block;">       <a href="{{ path('del_forum',{id : f.id}) }}" class="btn btn-danger"  > avertir user </a> </div>
+
+                                </th>
+
+                            </tr>
+                        {% endfor %}
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('admin/vendor/datatables/jquery.dataTables.min.js') }}"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="{{ asset('admin/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('admin/js/demo/datatables-demo.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'back_base.html.twig' %}
+
+{% block title %}Edit Centre{% endblock %}
+
+{% block body %}
+    <div class="container">
+    <h1>Edit Centre</h1>
+
+    {{ include('/back/centre/_formB.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('centre_indexB') }}">back to list</a>
+
+    {{ include('/back/centre/_delete_formB.html.twig') }}
+    </div>
+{% endblock %}

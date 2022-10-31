@@ -1,0 +1,48 @@
+{% extends 'back_base.html.twig' %}
+{% block title %} modifier Dermatologues {% endblock %}
+{% block body %}
+
+{#  {{ form(f) }} #}
+    {{ form_start (f,{'attr': {'novalidate': 'novalidate'}}) }}
+    <h1>Modifier Dermatologue </h1>
+    {#{{ form_errors(form.cin) }}
+    {{ form_label(f.cin,"Cin") }}
+    {{ form_widget(f.cin) }}
+    #}
+
+    {{ form_label(f.diplome,"Diplome") }}
+    {{ form_widget(f.diplome) }}
+
+
+    {{ form_label(f.formation,"formation") }}
+    {{ form_widget(f.formation) }}
+
+
+    {{ form_label(f.langue,"Langue") }}
+    {{ form_widget(f.langue) }}
+
+
+    {{ form_label(f.horaire,"horaire") }}
+    {{ form_widget(f.horaire) }}
+
+
+    {{ form_label(f.modereglement,"mode de reglement") }}
+    {{ form_widget(f.modereglement) }}
+
+
+    {{ form_label(f.assurancemaladie,"assurrancemaladie") }}
+    {{ form_widget(f.assurancemaladie) }}
+
+
+
+    {{ form_label(f.image) }}
+    {{ form_widget(f.image) }}
+
+
+    {{ form_label(f.categorie) }}
+    {{ form_widget(f.categorie) }}
+
+    {{ form_end(f) }}
+
+
+{% endblock %}

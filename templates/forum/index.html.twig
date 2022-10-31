@@ -1,0 +1,304 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}forum {% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('front/styles/bootstrap4/gref.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('front/plugins/jquery-ui-1.12.1.custom/jquery-ui.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('front/styles/categories_styles.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('front/styles/categories_responsive.css') }}">
+
+    <style>
+
+        @keyframes spinner {
+            0% {
+                transform: translate3d(-50%, -50%, 0) rotate(0deg);
+            }
+            100% {
+                transform: translate3d(-50%, -50%, 0) rotate(360deg);
+            }
+        }
+        .spin::before {
+            animation: 1.5s linear infinite spinner;
+            animation-play-state: inherit;
+            border: solid 5px #cfd0d1;
+            border-bottom-color: #fe4c50;
+            border-radius: 50%;
+            content: "";
+            height: 40px;
+            width: 40px;
+            position: absolute;
+            top: 10%;
+            left: 10%;
+            transform: translate3d(-50%, -50%, 0);
+            will-change: transform;
+        }
+
+        .btn_ajouter_form{
+            background: #fe4c50;
+            border: #fe4c50;
+
+            text-decoration: none!important;
+            padding: 9px 16px;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            box-shadow: 0 1px 2px rgb(36 57 141 / 40%);
+            border-radius: 4px;
+            line-height: 1.6;
+            font-family: Inter,sans-serif;
+            font-weight: 700;
+            color: #fff;
+            cursor: pointer;
+            transition: filter .3s,background .3s,color .3s;
+            font-size: .9em;
+            filter: brightness(1);
+            white-space: nowrap;
+        }
+        .page{
+            font-weight:bold;
+            font-size:20px;
+            color: black;
+            float: left;
+            padding: 8px 16px;
+            text-decoration: none;
+            border-radius:5px;
+            border:1px solid black;
+
+        }
+        .current
+        {
+            font-weight:bold;
+            font-size:20px;
+            color: black;
+            float: left;
+            padding: 8px 16px;
+            text-decoration: none;
+            border-radius:5px;
+            border:1px solid black;
+            background-color:#fe4c50;
+        }
+        .page:hover{
+            background-color: #fe4c50;
+        }
+        .last{
+            font-weight:bold;
+            font-size:20px;
+            color: black;
+            float: left;
+            padding: 8px 16px;
+            text-decoration: none;
+            border-radius:5px;
+            border:1px solid black;
+
+        }
+        .next{
+            font-weight:bold;
+            font-size:20px;
+            color: black;
+            float: left;
+            padding: 8px 16px;
+            text-decoration: none;
+            border-radius:5px;
+            border:1px solid black;
+
+        }
+
+
+        ul .pagination
+        {
+            display: inline-block;
+
+
+        }
+
+        .button_sujet {
+            background-color: #ddd;
+            border: none;
+            color: black;
+
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            margin: 2px;
+            cursor: pointer;
+
+            font-family: inherit;
+
+            font-size: 10px;
+            height: 18px;
+            padding: 0 5px;
+            font-weight: 400;
+            line-height: 18px;
+            border-radius: 3px;
+        }
+
+        .button_sujet:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+    <div class="container single_product_container">
+        <div class="breadcrumbs d-flex flex-row align-items-center">
+            <ul>
+                <li><a href="index.html"><h1 class="hero-title" style="white-space: nowrap">Forum</h1></a></li>
+
+            </ul>
+
+        </div>
+
+
+
+        {% if app.user %}
+        <a class="btn_ajouter_form" href="{{ path('add_forum') }}">nouveau forum     +</a>
+        {% endif %}
+
+        <div class="row">
+            <div class="col-md-3">
+                <div class="sidebar_title">
+                    <h5>tous les sujets</h5>
+                </div>
+                <ul class="sidebar_categories">
+                    {%  for s in sujet %}
+                    <li><a class="js-caths" data-browse="{{ s.id }}" href="">{{ s.nom }}</a></li>
+                        <input type="hidden" value="" id="backUpCaths">
+                        <!-- <li class="active"><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i></span>Women</a></li>-->
+                    {% endfor %}
+                </ul>
+                {% include 'forum/filter.html.twig' with {form: form} only %}
+
+            </div>
+            <div class="col-md-9 ">
+                <div class="forum-page__main stack" id="js-content">
+                    {% include 'forum/forums.html.twig' with {forum: forum} only %}
+                </div>
+                <div class="pages d-flex flex-row " id="js-pagination">
+                    {% include 'forum/pagination.html.twig' with {forum: forum} only %}
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+
+
+
+
+{% endblock %}
+{% block javascripts %}
+    <script src="https://ajax.googleapis.com/ajax/libs/cesiumjs/1.78/Build/Cesium/Cesium.js"></script>
+    <script src="{{ asset('front/plugins/jquery-ui-1.12.1.custom/jquery-ui.js') }}"></script>
+    <script src="{{ asset('front/js/categories_custom.js') }}"></script>
+    <script>
+
+
+        const caths = document.querySelectorAll('.js-caths')
+        const input = document.querySelector('.cher-forum')
+        const pagination = document.querySelector('#js-pagination');
+       const backUp = document.querySelector('#backUpCaths')
+        pagination.addEventListener('click',onclickpagin)
+        caths.forEach(cath=>{
+            cath.addEventListener('click',onclickCath)
+
+        })
+        async function onclickCath(event){
+
+           event.preventDefault();
+
+           const id = this.getAttribute('data-browse')
+            backUp.value = id;
+            const q = input.value
+
+        const url = 'http://127.0.0.1:8000/forum/?q=' + q + '&cath_id='+id
+            return loadUrl(url)
+
+        }
+        async function onclickpagin(e){
+           if(e.target.tagName === 'A'){
+
+               e.preventDefault()
+               return loadUrl(e.target.getAttribute('href'))
+
+
+           }
+
+
+        }
+        input.addEventListener('keyup',onsubmit)
+        async function onsubmit(e){
+
+                //e.preventDefault()
+
+                const data = input.value;
+
+                const id = backUp.value
+            if(id ===''){
+                const    url = 'http://127.0.0.1:8000/forum/?q='+data;
+                return loadUrl(url)
+            }
+            else{
+                const    url = 'http://127.0.0.1:8000/forum/?q='+data + '&cath_id='+id;
+                return loadUrl(url)
+            }
+
+             // return loadUrl(url);
+
+
+
+
+        }
+        async function loadUrl(url){
+
+            showloder()
+            const response = await fetch(url,{
+                mathod: 'GET',
+                headers:{
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+
+                    'X-Requested-With': 'XMLHttpRequest'
+
+
+                }
+
+
+
+            })
+            const data =await response.json();
+            const content = document.querySelector(('#js-content'))
+
+
+//            console.log(data.forums)
+            const paging = document.querySelector(('#js-pagination'))
+
+            content.innerHTML = data.forums;
+
+            paging.innerHTML = data.page;
+            hideLoader()
+
+
+        }
+       function flipContent(contenu){
+
+
+        }
+        function showloder(){
+            const loader = document.querySelector(('.js-loader'))
+            loader.setAttribute('aria-hidden','false')
+            loader.style.display=null
+
+        }
+        function hideLoader(){
+            const loader = document.querySelector(('.js-loader'))
+            loader.setAttribute('aria-hidden','true')
+            loader.style.display='none'
+
+
+
+        }
+
+    </script>
+
+{% endblock %}

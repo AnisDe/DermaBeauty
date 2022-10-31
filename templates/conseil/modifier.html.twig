@@ -1,0 +1,21 @@
+{% extends 'back_base.html.twig' %}
+{% block title %}modifier ordonnance{% endblock %}
+
+{% block body %}
+    <h1>modifier ordonnance</h1>
+    {{ form_start(f,{'attr':{'novalidate':'novalidate'}}) }}
+    {{ form_label(f.reference,"reference") }}
+    {{ form_widget(f.reference) }}
+    {{ form_label(f.remarques,"remarques") }}
+    {{ form_widget(f.remarques) }}
+    {{ form_label(f.date_red,"date redaction") }}
+    {{ form_widget(f.date_red) }}
+    {{ form_label(f.date_limite,"date limite ") }}
+    {{ form_widget(f.date_limite) }}
+    {{ form_label(f.nom_derma,"nom du dermatologue") }}
+    {{ form_widget(f.nom_derma) }}
+    {{ form_label(f.email,"email du patient") }}
+    {{ form_widget(f.email) }}
+
+    {{ form_end(f) }}
+{% endblock %}

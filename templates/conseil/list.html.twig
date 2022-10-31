@@ -1,0 +1,60 @@
+{% extends 'back_base.html.twig' %}
+
+
+{% block title %}ordonnance{% endblock %}
+
+{% block body %}
+
+    <h1>Liste des ordonnance</h1>
+
+    <div class="card-body">
+        <div class="table-responsive">
+
+            <table class="table table-bordered"  width="100%" cellspacing="0">
+                <center>  <button class="rounded-circle border-0" id="sidebarToggle"><a  class="nav-link" href="{{ path('affichO') }}"> actualiser </a>  </button>
+                    <button class="rounded-circle border-0" id="sidebarToggle">
+                        <a  class="nav-link" href="{{ path('trierpardate') }}">trier</a>
+                    </button></center>
+                <form role="search" id="nav-search-form" method="post" action="{{ path('recherche_ref') }}">
+
+                    <input type="text" class="form-control round" id="search"  name="search" placeholder="Search">
+                    <br>
+                    <button class="rounded-circle border-0" type="submit" > <a class="nav-link"> Search </a></button>
+
+                </form>
+                <thead>
+                <br>
+
+                <th>ref</th>
+                <th>remarques</th>
+                <th>date redaction</th>
+                <th>date expiration</th>
+                <th>nom_derma</th>
+
+                </thead>
+                <tbody {% for o in conseils %} >
+
+                <tr>
+                    <td>{{ o.reference }}</td>
+                    <td>{{ o.remarques }}</td>
+                    <td>{{ o.datered|date("Y/m/d")}}</td>
+                    <td>{{ o.datelimite|date("Y/m/d") }}</td>
+                    <td>{{ o.nomderma }}</td>
+
+                    <td><a href="{{ path('supprimerO',{'reference':o.reference}) }}"class="btn btn-danger btn-circle"><i class="fas fa-trash"></i></a></td>
+                    <td><a href="{{ path('modifierO',{'reference':o.reference}) }}"class="btn btn-warning btn-circle"><i class="fas fa-exclamation-triangle"></i></a></td>
+                </tr>
+
+
+                </tbody {% endfor %}>
+            </table>
+            <button class="rounded-circle border-0" id="sidebarToggle">
+                <a class="nav-link" href="{{ path('ajoutO') }}">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>ajouter une ordonnance</span></a>
+            </button>
+
+        </div>
+    </div>
+
+{% endblock %}

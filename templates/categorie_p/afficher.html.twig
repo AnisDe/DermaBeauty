@@ -1,0 +1,73 @@
+{% extends 'back_base.html.twig' %}
+
+{% block title %}Hello CategoriePController!{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h1>Liste des Categories-Produits</h1>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table border="1" class="table table-bordered"  width="100%" cellspacing="0">
+                <thead>
+                <th>ReferenceC</th>
+                <th>NomC</th>
+                <th>Update</th>
+                <th>Delete</th>
+                {% for categorie in categories %}
+                <tbody>
+                <td>
+                    {{ categorie.ReferenceC }}
+                </td>
+                <td>
+                    {{ categorie.NomC }}
+                </td>
+                <td> <a href="{{path('modifier_CP',{'Reference_C':categorie.ReferenceC})  }}">Update</a>  </td>
+                <td> <a href="{{path('supprimer_CP',{'Reference_C':categorie.ReferenceC})  }}">Delete</a>  </td>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+            <button class="rounded-circle border-0" id="sidebarToggle">
+                <a class="nav-link" href="{{ path('ajouter_CP') }}">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>ajouter une categories</span></a>
+            </button>
+            <div class="col-sm-12 col-md-7">
+                <ul class="pagination">
+                    <li class="{{ (page == 1) ? 'disabled': ''}}">
+                        <a href="?page=1">
+                            <i class="fas fa-step-backward"></i>
+                        </a>
+                    </li>
+
+                    <li class="{{ (page == 1) ? 'disabled': ''}}">
+                        <a href="{{ (page>1) ? '?page='~ (page-1 ) : ''}}">
+                            <i class="fas fa-angle-left"></i>
+                        </a>
+                    </li>
+                    {% set pages=(total/limit)|round(0,'ceil') %}
+                    {% for item in 1..pages %}
+                        <li class="{{ (page == item) ? 'active': ''}}">
+                            <a href="?page={{ item }}">{{ item }}</a>
+                        </li>
+
+                    {% endfor %}
+                    <li class="{{ (page == pages) ? 'disabled': ''}}">
+                        <a href="{{ (page<pages) ? '?page='~ (page+1 ) : ''}}">
+                            <i class="fas fa-angle-right"></i>
+                        </a>
+                    </li>
+
+                    <li class="{{ (page == pages) ? 'disabled': ''}}">
+                        <a href="?page={{ pages }}">
+                            <i class="fas fa-step-forward"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

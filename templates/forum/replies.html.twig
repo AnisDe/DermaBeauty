@@ -1,0 +1,129 @@
+{% for r in replies %}
+
+            <div class="forum-message is-reply" id="">
+                <div class="forum-avatar">
+                    <img class="forum-message__avatar" src="{{ r.user.makeAvatar() }}">
+                </div>
+
+
+
+
+                    <div class="forum-message__header">
+                        <a href="" class="forum-message__author">{{ r.user.nom }}</a>
+
+
+                        {% if app.user and r.user.id == app.user.id %}
+                            <div class="pill pill-darkgrey small">
+                                Auteur
+                            </div>
+                            <a class="button_delete_rep" href="{{ path('deleteRep',{id:r.id}) }}">supprimer  </a>
+                            <a class="button_edit_rep"  href="{{ r.id }}">editer  </a>
+
+                        {% endif %}
+                    </div>
+                <div class="forum-message__actions">
+                    {% if app.user and not r.isSignaledByUser(app.user) %}
+                    <div style="position: relative;">
+                        <a href="#" data-browse="{{ r.id }}" data-popup-ref="{{ r.id }}" class="rounded-button warning" >
+                            !
+
+                        </a>
+                    </div>
+
+
+
+                    <div class="popup" data-popup-id="{{ r.id }}">
+                        <div class="popup-content" id="contenu{{ r.id }}">
+                            <div class="popup-header">
+                                <div class="title">signaler ce commentaire</div>
+                                <span class="btn-close" data-dismiss-popup> &times; </span>
+                            </div>
+                            <div class="popup-body">
+                                <h4>RAISON DU SIGNALEMENT</h4>
+                                <div class="container">
+                                    <div class="">
+                                        <div class="get_in_touch_contents">
+
+                                            <p>veuiller s'authentifier</p>
+                                            <form action="" method="get" class="js-signal{{ r.id }}">
+                                                <div>
+                                                    <input type="hidden" value="{{ r.forum.id }}" name="" class="id_forum{{ r.id }}">
+                                                    <input type="hidden" value="{{ r.id }}" name="rep_id">
+                                                    <input id="input_name" class="form_input input_name input_ph" type="text" name="raison" placeholder="indiquer en quoi ce commentaire ne convient pas..." required="required" >
+
+
+                                                </div>
+                                                <div>
+                                                    <button type="submit" id="btn_envoyer">envoyer</button>
+
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+
+                            </div>
+                            <div class="popup-footer">
+                                <button class="btn-close" data-dismiss-popup>Fermer</button>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    {% endif %}
+                    <div class="">
+                        <a href="{{ path('like_reply',{id:r.id})}}" data-browse="{{ r.id }}" class="js-like">
+                            {% if app.user and r.isLikedByUser(app.user) %}
+
+                                <div class="emoji">  <i class="like-btn material-icons">thumb_up</i></div>
+                            {% else %}
+                                <div class="emoji">  <i class="like-btn material-icons">thumb_up_off_alt</i></div>
+                            {% endif %}
+
+                        </a>
+
+
+
+                    </div>
+                    <div>
+                    <span id="" class="js-likes{{ r.id }}">{{ r.replyLikes | length }}</span>
+                    </div>
+
+
+                </div>
+
+
+                <div class="forum-message__body">
+
+                    <div class="formatted card js-content p2" id="content_response{{ r.id }}"><p>{{ r.content }}.</p></div>
+                    {% if app.user and r.user.id == app.user.id %}
+
+                    <form action="" method="get" class="js-comment_modif{{ r.id }}" style="display: none;">
+                        <div> <input type="text" id="input_name" name="cont" class="form_input input_name input_ph" required placeholder="modifier votre reponse ..."><button type="submit" id="btn_envoyer">modifier !</button>
+                            <input type="hidden" name="id_response" value="{{ r.id }}">
+                        </div>
+                    </form>
+                    {% endif %}
+
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+{% endfor %}
+<input type="hidden" value="0" class="update_status">
+<div class="forum-message is-reply newComment">
+
+</div>

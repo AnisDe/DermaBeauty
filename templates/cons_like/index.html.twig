@@ -1,0 +1,50 @@
+{% extends 'back_base.html.twig' %}
+
+
+    {% block title %}ordonnance{% endblock %}
+
+
+
+
+
+
+{% block body %}
+<div class="container-fluid">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+    <h1>Liste des ordonnance</h1>
+
+    <div class="card-body">
+        <div class="table-responsive">
+
+            <table class="table table-bordered"  width="100%" cellspacing="0">
+
+                <thead>
+                <br>
+                <tr>
+                    <th>id</th>
+                    <th>patient</th>
+                    <th>nom du dermatologue</th>
+
+
+
+                </tr>
+                </thead>
+                <tbody {% for l in likes %} >
+
+                <tr>
+                    <td>{{ l.idl }}</td>
+                    <td>{{ l.user}}</td>
+                    <td>{{ l.conseil}}</td>
+
+
+
+                </tr>
+                </tbody {% endfor %}>
+            </table>
+    </div>
+    </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,111 @@
+{% extends 'back_base.html.twig' %}
+{% block head %}
+<head>
+
+</head>
+{% endblock %}
+{% block title %}formulaire!{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+    <h1>Liste des formulaire</h1>
+
+    <div class="card-body">
+        <div class="table-responsive">
+
+            <table class="table table-bordered"  width="100%" cellspacing="0">
+             <center>  <button class="rounded-circle border-0" id="sidebarToggle"><a  class="nav-link" href="{{ path('affichF') }}"> actualiser </a>  </button>
+               <button class="rounded-circle border-0" id="sidebarToggle">
+                        <a  class="nav-link" href="{{ path('trierparcin') }}">trier</a>
+               </button></center>
+                <form role="search" id="nav-search-form" method="post" action="{{ path('recherche') }}">
+
+                    <input type="text" class="form-control round" id="search"  name="search" placeholder="Search">
+                    <br>
+                    <button class="rounded-circle border-0" type="submit" > <a class="nav-link"> Search </a></button>
+
+                </form>
+                <thead>
+                <br>
+
+                <th>ref</th>
+                <th>cin</th>
+                <th>question1</th>
+                <th>question2</th>
+                <th>question3</th>
+                <th>question4</th>
+                <th>question5</th>
+                <th>question6</th>
+                <th>type</th>
+                <th>supprimer</th>
+                <th>modifier</th>
+                <th>pdf</th>
+                </thead>
+                <tbody {% for form in forms %} >
+
+                <tr>
+                    <td>{{ form.ref }}</td>
+                    <td>{{ form.cin }}</td>
+                    <td>{{ form.quest1 }}</td>
+                    <td>{{ form.quest2}}</td>
+                    <td>{{ form.quest3 }}</td>
+                    <td>{{ form.quest4}}</td>
+                    <td>{{ form.quest5}}</td>
+                    <td>{{ form.quest6}}</td>
+                    <td>{{ form.type }}</td>
+                    <td><a href="{{ path('supprimerF',{'ref':form.ref}) }}"class="btn btn-danger btn-circle"><i class="fas fa-trash"></i></a></td>
+                    <td><a href="{{ path('modifierF',{'ref':form.ref}) }}"class="btn btn-warning btn-circle"><i class="fas fa-exclamation-triangle"></i></a></td>
+                   <td> <a href="{{ path('PDF',{'ref':form.ref}) }}"class="btn btn-warning btn-circle">pdf</a></td>
+                </tr>
+
+
+                </tbody {% endfor %}>
+            </table>
+            <button class="rounded-circle border-0" id="sidebarToggle">
+                <a class="nav-link" href="{{ path('ajoutF') }}">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>ajouter un formulaire</span></a>
+            </button>
+
+        </div>
+        <div class="col-sm-12 col-md-7">
+            <ul class="pagination">
+                <li class="{{ (page == 1) ? 'disabled': ''}}">
+                    <a href="?page=1">
+                        <i class="fas fa-step-backward"></i>
+                    </a>
+                </li>
+
+                <li class="{{ (page == 1) ? 'disabled': ''}}">
+                    <a href="{{ (page>1) ? '?page='~ (page-1 ) : ''}}">
+                        <i class="fas fa-angle-left"></i>
+                    </a>
+                </li>
+                {% set pages=(total/limit)|round(0,'ceil') %}
+                {% for item in 1..pages %}
+                    <li class="{{ (page == item) ? 'active': ''}}">
+                        <a href="?page={{ item }}">{{ item }}</a>
+                    </li>
+
+                {% endfor %}
+                <li class="{{ (page == pages) ? 'disabled': ''}}">
+                    <a href="{{ (page<pages) ? '?page='~ (page+1 ) : ''}}">
+                        <i class="fas fa-angle-right"></i>
+                    </a>
+                </li>
+
+                <li class="{{ (page == pages) ? 'disabled': ''}}">
+                    <a href="?page={{ pages }}">
+                        <i class="fas fa-step-forward"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

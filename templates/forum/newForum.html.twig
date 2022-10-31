@@ -1,0 +1,37 @@
+{% extends 'front_base.html.twig' %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('plugins/themify-icons/themify-icons.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('plugins/jquery-ui-1.12.1.custom/jquery-ui.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('styles/contact_styles.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('styles/contact_responsive.css') }}">
+{% endblock %}
+{% block body %}
+    <div class="container contact_container">
+        <div class="">
+            <div class="get_in_touch_contents">
+                <h1>creer un forum</h1>
+                <p>veuiller remplir ce formulaire</p>
+                {{ form_start(form) }}
+                <div>
+                    {{ form_row(form.titre, {'id':'input_name','attr': {'class': 'form_input input_name input_ph','placeholder':'titre...'}}) }}
+                    {{ form_row(form.sujet, {'id':'input_name','attr': {'class': 'form_input input_name input_ph'}}) }}
+                    {{ form_row(form.blog, {'id':'input_name','attr': {'class': 'input_ph input_message','placeholder':'content...'}}) }}
+
+
+                </div>
+                <div>
+                    <button id="review_submit" type="submit" class="red_button message_submit_btn trans_300" value="Submit">publier !</button>
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+
+
+
+    </div>
+
+{%  endblock%}
+{% block javascripts %}
+    <script src="{{ asset('plugins/jquery-ui-1.12.1.custom/jquery-ui.js') }}"></script>
+    <script src="{{ asset('js/contact_custom.js') }}"></script>
+{% endblock %}

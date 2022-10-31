@@ -1,0 +1,31 @@
+{% for f in forum %}
+
+    <div class="forum-topic" id="topic-1776">
+        <div class="forum-avatar">
+            <img src="{{ f.user.makeAvatar() }}" alt="">
+        </div>
+        <div class="forum-topic__body">
+            <a class="forum-topic__title" href="https://grafikart.fr/forum/1776">{{ f.titre }}</a>
+            <div class="forum-topic__meta">
+                <div class="forum-topic__tags">
+                    <div class="topic-tag">
+                        <a href="https://grafikart.fr/forum/php-5" class="is-parent pill small pill-square pill-grey" style="background-color: #4c6aa8">{{ f.sujet.nom }}</a>
+
+                    </div>
+                </div>
+                <svg class="icon icon-reply">
+                    <use xlink:href="https://grafikart.fr/sprite.svg#reply"></use>
+                </svg>
+
+                <a
+                        href="https://grafikart.fr/forum/1776#message-6024">{{ f.user.nom }}</a>, <time-ago time="1307217572"></time-ago>
+            </div>
+        </div>
+        <div class="forum-topic__count">
+            <i class="fa fa-comment-o" aria-hidden="true">  </i>
+
+            {{ f.replies |length  }}
+        </div>
+        <a href="https://grafikart.fr/forum/1776" aria-hidden="true" class="forum-topic__link" tabindex="-1"></a>
+    </div>
+{% endfor %}

@@ -1,0 +1,56 @@
+
+{% extends 'back_base.html.twig' %}
+{% block title %} afficher dermatologue {% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+    <div class="card shadow mb-4">
+    <div class="card-header py-3">
+    <h1>Liste des Dermatologues </h1>
+    <div class="card-body">
+    <div class="table-responsive">
+    <table border="2" class="table table-bordered"  width="100%" cellspaidg="0">
+        <thead>
+        <th>id</th>
+        <th>Diplome</th>
+        <th>Formation</th>
+        <th>Langue</th>
+        <th>Horaire</th>
+        <th>Mode De reglement</th>
+        <th>Assurance Maladie</th>
+        <th>Image</th>
+        <th>Email</th>
+
+       {# <th> Update </th>
+          <th>Delete</th>
+       #}
+
+        </thead>
+        {% for d in dermatologues %}
+            <tbody>
+
+            <td>{{ d.id }}</td>
+            <td>{{ d.diplome }}</td>
+            <td>{{ d.formation }}</td>
+            <td>{{ d.langue }}</td>
+            <td>{{ d.horaire }}</td>
+            <td>{{ d.modereglement}}</td>
+            <td>{{ d.assurancemaladie }}</td>
+
+            <td><img src="{{ asset('/back/img/'~d.image) }}" alt="" style="width: 400px ; height:auto ">
+            </td>
+            <td>{{ d.email }}</td>
+            <td> <a href="  {{path('updatederm',{'id':d.id}) }}" class="btn btn-warning btn-circle"><i class="fas fa-exclamation-triangle"></i></a>
+                 <a href="  {{path('derm',{'id':d.id}) }}" class="btn btn-danger btn-circle" ><i class="fas fa-trash"></i></a>
+
+            </td>
+            </tbody>
+        {% endfor %}
+    </table>
+
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+{% endblock %}

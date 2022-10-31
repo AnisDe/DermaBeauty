@@ -1,0 +1,72 @@
+{% extends 'back_base.html.twig' %}
+{% block title %}Statistiques{% endblock %}
+{#  {% block title %} Stats{% endblock %} #}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+        <div class="col-xl-4 col-lg-5">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h3> statistique dermatologue </h3>
+                </div>
+                <canvas id="Users" width="10" height="10"></canvas>
+
+            </div>
+        </div>
+
+    <div class="col-xl-4 col-lg-5">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h3>statistique produit </h3>
+            </div>
+
+            <canvas id="produits" width="10" height="10"></canvas>
+
+        </div>
+
+    </div>
+            {{ dump() }}
+        </div>
+    </div>
+    <script>
+        let Users=document.querySelector("#Users")
+        let usergraph = new Chart(Users,
+
+            {
+                type:"pie",
+                data:{
+                    labels:{{ userName|raw }},
+                    datasets:[{
+                        label: "Repartition des User",
+                        data: {{ userCount|raw }},
+                backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)'],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',]
+                    }]
+                }
+            })
+
+    </script>
+    <script>
+        let produits = document.querySelector("#produits")
+        let prodgraph = new Chart(produits,{
+            type: "pie",
+            data: {
+                labels: {{ prodnom|raw }},
+                datasets: [{
+                    label: "Repartition des produits",
+                    data: {{ pourcentage|raw }},
+                    backgroundColor: {{ prodcouleur|raw }}
+
+                }]
+            }
+        })
+ </script>
+{% endblock %}
+

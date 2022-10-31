@@ -1,0 +1,77 @@
+
+{% extends 'back_base.html.twig' %}
+{% block title %}afficher categories Dermatologues {% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+    <div class="card shadow mb-4">
+    <div class="card-header py-3">
+    <h1>Liste des Catégories des Dermatologues </h1>
+    <div class="card-body">
+    <div class="table-responsive">
+    <table border="2" class="table table-bordered"  width="100%" cellspacing="0">
+        <thead>
+        <th>Reference </th>
+        <th>Localisation</th>
+        <th>Nom Categorie</th>
+       {#  <th>Update </th>
+        <th>Delete</th>
+       #}
+        </thead>
+        {% for d in dermatologuecat %}
+            <tbody>
+
+            <td>{{ d.ref }}</td>
+            <td>{{ d.localisation }}</td>
+            <td>{{ d.nomCat }}</td>
+            <td> <a href="  {{path('updatedermcat',{'ref':d.ref}) }}" class="btn btn-warning btn-circle"><i class="fas fa-exclamation-triangle"></i></a>
+                 <a href="  {{path('dermcat',{'ref':d.ref}) }}" class="btn btn-danger btn-circle" ><i class="fas fa-trash"></i></a>
+            </td>
+            </tbody>
+        {% endfor %}
+    </table>
+    <button class="rounded-circle border-0" id="sidebarToggle">
+        <a class="nav-link" href="{{ path('ajoutdermcat') }}">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>ajouter une categorie </span></a>
+    </button>
+    </div>
+
+<div class="col-sm-12 col-md-7">
+    <ul class="pagination">
+        <li class="{{ (page == 1) ? 'disabled': ''}}">
+            <a href="?page=1">
+                <i class="fas fa-step-backward"></i>
+            </a>
+        </li>
+
+        <li class="{{ (page == 1) ? 'disabled': ''}}">
+            <a href="{{ (page>1) ? '?page='~ (page-1 ) : ''}}">
+            <i class="fas fa-angle-left"></i>
+            </a>
+        </li>
+        {% set pages=(total/limit)|round(0,'ceil') %}
+        {% for item in 1..pages %}
+       <li class="{{ (page == item) ? 'active': ''}}">
+           <a href="?page={{ item }}">{{ item }}</a>
+       </li>
+
+            {% endfor %}
+        <li class="{{ (page == pages) ? 'disabled': ''}}">
+            <a href="{{ (page<pages) ? '?page='~ (page+1 ) : ''}}">
+                <i class="fas fa-angle-right"></i>
+            </a>
+        </li>
+
+        <li class="{{ (page == pages) ? 'disabled': ''}}">
+            <a href="?page={{ pages }}">
+                <i class="fas fa-step-forward"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+    </div>
+    </div>
+    </div>
+    </div>
+{% endblock %}

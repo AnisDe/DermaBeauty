@@ -1,0 +1,145 @@
+{% extends 'back_base.html.twig' %}
+{% block stylesheets  %}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+          integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+          crossorigin=""/>
+{% endblock %}
+{% block body %}
+    <style>
+
+        #mapid { height: 400px; }
+
+    </style>
+
+<h1> destination  </h1>
+
+
+    <div id="mapid"></div>
+    <div class="p-5">
+        <div class="text-center">
+            <h1 class="h4 text-gray-900 mb-4">chercher destination !!!!</h1>
+        </div>
+        <form class="user">
+            <div class="form-group">
+                <input type="text" class="form-control form-control-user"
+                       id="exampleInputEmail" aria-describedby="emailHelp"
+                       placeholder="entrer votre destination...">
+            </div>
+            <a href="index.html" id="searchDest" class="btn btn-primary btn-user btn-block">
+                Login
+            </a>
+        </form>
+
+
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+            integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+            crossorigin=""></script>
+
+    <script>
+
+
+        let carte = L.map('mapid').setView([36.8194382,9.5613714], 12);
+
+
+            L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                maxZoom: 18,
+
+                tileSize: 512,
+                zoomOffset: -1,
+
+            }).addTo(carte);
+        L.popup()
+            .setLatLng([35.6715066,10.0905415])
+            .setContent('<p>Hello world!<br />This is a nice popup.</p>')
+            .openOn(carte);
+
+
+
+
+
+    </script>
+    <script>
+        const link = document.querySelector('#searchDest')
+        link.addEventListener('click',searchDestination)
+        function searchDestination(event){
+            event.preventDefault()
+            const q =  document.querySelector('#exampleInputEmail').value;
+            if(q ===""){
+
+                alert('you have to right a destination');
+            }
+            else{
+
+                const    url = 'https://nominatim.openstreetmap.org/?addressdetails=1&q='+q+'%27&format=json&limit=1';
+
+                return load(url)
+            }
+
+
+
+        }
+        async function load(url){
+
+            const response = await fetch(url).catch(function (error){
+                if(error.response.status === 403){
+                    window.alert("vous avez deja signalez ce commmentaire ")
+                }
+            });
+            const data =await response.json()
+
+
+
+            if(data.length === 0){
+
+               alert('veuiller choisir une vile tunisienne')
+           }
+           else if (data[0].address.country != 'Tunisie'){
+
+                alert('veuiller choisir une vile tunisienne')
+            }
+
+           else{
+                L.popup()
+                    .setLatLng([data[0].lat,data[0].lon])
+                    .setContent('<p>Hello world!<br />This is a nice popup.</p>')
+                    .openOn(carte);
+
+
+            }
+//           console
+            //console.log(data);
+
+
+
+
+
+
+
+            //replie.innerHTML = data.reps
+            //playMusic()
+
+
+
+
+
+
+
+
+
+
+        }
+
+
+
+    </script>
+{% endblock %}
+
+
+
+
+
+

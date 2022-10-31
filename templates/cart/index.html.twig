@@ -1,0 +1,84 @@
+{% extends 'front_base.html.twig' %}
+
+{% block title %}Hello CartController!{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('front/plugins/themify-icons/themify-icons.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('front/plugins/jquery-ui-1.12.1.custom/jquery-ui.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('front/styles/contact_styles.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('front/styles/contact_responsive.css') }}">
+{% endblock %}
+
+{% block body %}
+
+
+
+    <div class="container main-section">
+        <div class="row">
+            <div class="col-lg-12 pb-2">
+                <h4>Votre panier</h4>
+            </div>
+
+            <div class="col-lg-12 pl-3 pt-3">
+
+
+                <table class="table table-hover border bg-white">
+
+                    <thead>
+                    <tr>
+                        <th>Produit</th>
+                        <th>Prix</th>
+                        <th style="width:10%;">Quantite</th>
+                        <th>name</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in item %}
+                        {% if item.produit is null %}
+                        {% else%}
+                            <tr>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-lg-2 Product-img">
+                                            <img src="{{ asset('/back/img/' ~ item.produit.ImageP) }}" class="img-responsive" width="150 px" height="150px" />
+                                        </div>
+
+                                    </div>
+                                </td>
+                                <td> {{ item.produit.PrixP }} </td>
+                                <td data-th="Quantity">
+                                    {{ item.quantite }}
+                                </td>
+                                <td> {{ item.produit.NomP }} </td>
+                                <td class="actions" data-th="" style="width:10%;">
+                                    <button class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button>
+                                    <a href="{{ path('cart_remove',{id:item.produit.ReferenceP}) }}"><button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button></a>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+
+                    </tbody>
+
+                    <tfoot>
+                    <tr>
+                        <td><a href="javascript:history.go(-2)" class="btn btn-warning text-white"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
+                        <td colspan="2" class="hidden-xs"></td>
+                        <td class="hidden-xs text-center" style="width:10%;"><strong>Total : {{ total }}</strong></td>
+                        <td><a href="{{ path('addCommande') }}" class="btn btn-success btn-block">Commander <i class="fa fa-angle-right"></i></a></td>
+                    </tr>
+                    </tfoot>
+                </table>
+
+
+            </div>
+
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+
+
+    </div>
+{% endblock %}

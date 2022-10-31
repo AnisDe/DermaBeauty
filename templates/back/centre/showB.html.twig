@@ -1,0 +1,51 @@
+{% extends 'back_base.html.twig' %}
+
+{% block title %}Centre{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Centre</h1>
+
+        <table class="table">
+            <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ centre.id }}</td>
+            </tr>
+
+            <tr>
+                <th>Nom</th>
+                <td>{{ centre.nom }}</td>
+            </tr>
+            <tr>
+                <th>Telephone</th>
+                <td>{{ centre.telephone }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ centre.email }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ centre.description }}</td>
+            </tr>
+            <tr>
+                <th>Horaire</th>
+                <td>{{ centre.horaire ? centre.horaire|date('H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>categorie</th>
+                <td> {% for centre in centre.categorie %}
+                    {{ centre.type }} <br>
+                    {% endfor %} </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <a href="{{ path('centre_indexB') }}">back to list</a>
+
+        <a href="{{ path('centre_editB', {'id': centre.id}) }}">edit</a>
+
+        {{ include('/back/centre/_delete_formB.html.twig') }}
+    </div>
+{% endblock %}

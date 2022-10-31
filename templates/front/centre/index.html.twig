@@ -1,0 +1,49 @@
+{% extends 'front_base.html.twig' %}
+
+{% block title %}Centre index{% endblock %}
+
+{% block body %}
+
+<link rel="stylesheet" href="{{ asset('front/plugins/themify-icons/themify-icons.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('front/styles/single_styles.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('front/styles/single_responsive.css') }}">
+
+<div class="container ">
+    <div class="row">
+        <div class="col">
+
+
+            <div class="breadcrumbs d-flex flex-row align-items-center">
+                <ul>
+                    <li><a href="">Home</a></li>
+                    <li><a href=""><i class="fa fa-angle-right" aria-hidden="true"></i>Centre</a></li>
+                </ul>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="jumbotron">
+    <div class="js-filter">
+        {{ form_start(form , {attr : {class: 'filter js-filter-form'}} ) }}
+        <h4>Recherche</h4>
+        {{ form_row(form.q) }}
+        <h4>Categories</h4>
+        {{ form_row(form.categories) }}
+        <button type="submit" class="btn btn-primary">rechercher</button>
+        {{ form_end(form) }}
+
+
+
+
+        <div class="js-filter-content">
+            {% include 'front/centre/_centres.html.twig'%}
+
+        </div>
+
+</div>
+</div>
+    {% endblock %}
+
+
+

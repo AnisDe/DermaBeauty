@@ -1,0 +1,13 @@
+{% extends 'back_base.html.twig' %}
+
+{% block title %}New Centre{% endblock %}
+
+{% block body %}
+    <div class="container">
+    <h1>Create new Centre</h1>
+
+    {{ include('/back/centre/_formB.html.twig') }}
+
+    <a href="{{ path('centre_indexB') }}">back to list</a>
+    </div>
+{% endblock %}

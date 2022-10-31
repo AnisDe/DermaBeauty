@@ -1,0 +1,115 @@
+
+{% extends "back_base.html.twig" %}
+{% block title %}Admin. | {{ parent() }}{% endblock %}
+
+{% block body %}
+    <style>
+        .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+        .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    </style>
+<div class="container-fluid">
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">
+            Liste des utilisateurs
+            </h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+
+            <table class="table table-bordered"  width="100%" cellspacing="0">
+
+                <thead>
+                <br>
+
+                <th  style="width: 100px">cin</th>
+                <th style="width: 100px">nom</th>
+                <th style="width: 100px">email</th>
+                <th style="width: 100px">role</th>
+                <th style="width: 100px">actions</th>
+                <th style="width: 100px">envoyer un email/ ajout d'un dermatologue (une seule fois et pour les users)</th>
+
+                </thead>
+                <tbody {% for user in users %} >
+
+                <tr>
+                    <td>{{ user.cin }}</td>
+                    <td>{{ user.nom }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>  {% for role in user.roles %}
+                            {% if role == "ROLE_USER" %}
+                                  Utilisateur
+
+                            {% elseif role == "ROLE_ADMIN" %}
+                                Administrateur
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td> <a href="{{ path ('supprimerU' ,{'id':user.id}) }}" class="btn btn-danger btn-circle" ><i class="fas fa-trash"></i></a>
+                        <div class="my-2"> </div>
+                        {% for role in user.roles %}
+                        {% if role == "ROLE_ADMIN"  %}
+                        <a href="{{ path ('modifierU' ,{'id':user.id}) }}"  class="btn btn-info btn-circle"><i class="fas fa-info-circle"></i></a>
+                            {% else %}
+
+                        {% for derma in dermatologues %}
+                            {% if user.id == derma.id %}
+                                <a href="{{ path ('updatederm' ,{'id':user.id}) }}"  class="btn btn-info btn-circle"><i class="fas fa-info-circle"></i></a>
+
+                            {% else %}
+                                <a href="{{ path ('modifierU' ,{'id':user.id}) }}"  class="btn btn-info btn-circle"><i class="fas fa-info-circle"></i></a>
+
+                            {% endif %}
+                        {% endfor %}
+                        {% endif %}
+                        {% endfor %}
+                    </td>
+                     <td>
+                         {% for role in user.roles %}
+                             {% if role != "ROLE_ADMIN"  %}
+                                 <a href="  {{path('ajoutdermu',{'id':user.id})  }}" class="btn btn-secondary btn-icon-split " >
+                            <span class="icon text-white-50" >
+                                <i class="fas fa-arrow-right">
+                                </i>
+                            </span>
+                                     <span class="text" >ajout en tant que dermatologue</span>
+                                 </a>
+                             {% for derma in dermatologues %}
+                                 {% if role == "ROLE_ADMIN" or user.id == derma.id %}
+                                     deja admin ou dermatologue
+                                     {% elseif  role == "ROLE_USER" %}
+                                         <a href="  {{path('ajoutdermu',{'id':user.id})  }}" class="btn btn-secondary btn-icon-split " >
+                            <span class="icon text-white-50" >
+                                <i class="fas fa-arrow-right">
+                                </i>
+                            </span>
+                                             <span class="text" >ajout en tant que dermatologue</span>
+                                         </a>
+                                {% endif %}
+                             {% endfor %}
+                             {% endif %}
+                         {% endfor %}
+
+                        <div class="my-2"> </div>
+                         <a href="  {{path('contact',{'id':user.id})  }}" class="btn btn-light btn-icon-split"  >
+                              <span class="icon text-gray-600" >
+                                <i class="fas fa-arrow-right">
+                                </i>
+                            </span>
+                             <span class="text ">envoyer un email</span>
+
+                         </a>
+
+                    </td>
+                </tr>
+
+
+                </tbody {% endfor %}>
+            </table>
+        </div>
+
+        </div>
+</div>
+</div>
+
+{% endblock %}

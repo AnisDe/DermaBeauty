@@ -1,0 +1,51 @@
+{% extends 'back_base.html.twig' %}
+
+
+{% block title %}categorie formulaire!{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+    <h1>Liste des formulaire</h1>
+
+    <div class="card-body">
+        <div class="table-responsive">
+
+            <table class="table table-bordered"  width="100%" cellspacing="0">
+
+                <thead>
+                <br>
+
+                <th>id categories</th>
+                <th>nom</th>
+                <th>type</th>
+
+                </thead>
+                <tbody {% for form in formcs %} >
+
+                <tr>
+                    <td>{{ form.idcat }}</td>
+                    <td>{{ form.nom }}</td>
+                    <td>{{ form.type }}</td>
+
+                    <td><a href="{{ path('supprimerFC',{'id_cat':form.idcat}) }}"class="btn btn-danger btn-circle"><i class="fas fa-trash"></i></a></td>
+                    <td><a href="{{ path('modifierFC',{'id_cat':form.idcat}) }}"class="btn btn-warning btn-circle"><i class="fas fa-exclamation-triangle"></i></a></td>
+                </tr>
+
+
+                </tbody {% endfor %}>
+            </table>
+            <button class="rounded-circle border-0" id="sidebarToggle">
+                <a class="nav-link" href="{{ path('ajoutFC') }}">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>ajouter une categories</span></a>
+            </button>
+
+        </div>
+    </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'front_base.html.twig' %}
+{% block title %} afficher dermatologue front  {% endblock %}
+{% block body %}
+
+    <div id="tab_1" class="tab_container active">
+        <div class="row">
+            <div class="col-lg-5 desc_col">
+                <div class="tab_title">
+                    <h4>Dermatologue</h4>
+                </div>
+                <div class="product_image">
+                    <img src="{{ asset('/back/img/'~ dermatologues.image) }}" alt="">
+                </div>
+
+
+            </div>
+
+            <div class="col-lg-5">
+                <div class="product_details">
+                    <div class="product_details_title">
+                        <h2>{{ dermatologues.id }}</h2>
+                        <p>Ce dermatologue est bien nommé </p>
+                    </div>
+
+                    <div class="original_price">{{ dermatologues.diplome }}</div>
+                    <div class="original_price">{{ dermatologues.formation}}</div>
+                    <div class="original_price">{{ dermatologues.horaire}}</div>
+                    <div class="original_price">{{ dermatologues.modereglement}}</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+{% endblock %}

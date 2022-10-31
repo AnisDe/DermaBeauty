@@ -1,0 +1,20 @@
+{% extends 'back_base.html.twig' %}
+{% block title %} Modifier Categories Dermatologues{% endblock %}
+
+{% block body %}
+    {{ form_start (f,{'attr': {'novalidate': 'novalidate'}}) }}
+    <h1>Modifier Categories Dermatologue  </h1>
+
+    {{ form_label(f.ref,"reference") }}
+    {{ form_widget(f.ref) }}
+
+
+    {{ form_label(f.localisation,"localisation") }}
+    {{ form_widget(f.localisation) }}
+
+
+    {{ form_label(f.nomCat,"Nom Categorie ") }}
+    {{ form_widget(f.nomCat) }}
+
+    {{ form_end(f) }}
+{% endblock %}

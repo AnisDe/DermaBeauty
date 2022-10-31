@@ -1,0 +1,47 @@
+{% extends 'front_base.html.twig' %}
+
+{% block title %}ajout formulaire!{% endblock %}
+{% block head %}
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=Element.prototype.closest"></script>
+
+   {% endblock %}
+
+
+{% block body %}
+
+<div class="container">
+
+ {{ form_start(form,{'attr':{'novalidate':'novalidate'}}) }}
+<center><h1>ajout formulaire</h1></center>
+
+{{ form_label(form.cin) }}
+{{ form_widget(form.cin) }}
+{{ form_label(form.quest1,"ton age") }}
+{{ form_widget(form.quest1) }}
+{{ form_label(form.quest2,"tes problemes ") }}
+{{ form_widget(form.quest2) }}
+{{ form_label(form.quest3,"des interventions chirugicales") }}
+{{ form_widget(form.quest3) }}
+{{ form_label(form.quest4,"besoins?") }}
+{{ form_widget(form.quest4) }}
+{{ form_label(form.quest5,"marque preferé") }}
+{{ form_widget(form.quest5) }}
+{{ form_label(form.quest6,"pays") }}
+{{ form_widget(form.quest6) }}
+{{ form_label(form.type,"type") }}
+{{ form_widget(form.type) }}
+<div style="visibility:hidden">
+{{ form_label(form.FormCateg,"form_categ") }}
+{{ form_widget(form.FormCateg,{value: idcat})}}
+</div>
+<br>
+<center>
+    {{ form_row(form.captcha)  }}
+<br>
+{{form_widget(form.ajouter)}}
+</center>
+{{ form_end(form) }}
+
+</div>
+{% endblock %}
+

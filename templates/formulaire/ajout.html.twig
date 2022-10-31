@@ -1,0 +1,33 @@
+{% extends 'back_base.html.twig' %}
+
+{% block title %}ajout formulaire!{% endblock %}
+
+{% block body %}
+
+
+    {{ form_start(form,{'attr':{'novalidate':'novalidate'}}) }}
+    <h1>ajout formulaire</h1>
+
+
+    {{ form_label(form.cin,"cin") }}
+    {{ form_widget(form.cin) }}
+    {{ form_label(form.quest1,"ton age") }}
+    {{ form_widget(form.quest1) }}
+    {{ form_label(form.quest2,"tes problemes ") }}
+    {{ form_widget(form.quest2) }}
+    {{ form_label(form.quest3,"des interventions chirugicales") }}
+    {{ form_widget(form.quest3) }}
+    {{ form_label(form.quest4,"besoins?") }}
+    {{ form_widget(form.quest4) }}
+    {{ form_label(form.quest5,"marque preferé") }}
+    {{ form_widget(form.quest5) }}
+    {{ form_label(form.quest6,"pays") }}
+    {{ form_widget(form.quest6) }}
+    {{ form_label(form.type,"type") }}
+    {{ form_widget(form.type) }}
+    {{ form_label(form.FormCateg,"form_categ") }}
+    {{ form_widget(form.FormCateg)}}
+    <br>
+    {{ form_end(form) }}
+
+{% endblock %}

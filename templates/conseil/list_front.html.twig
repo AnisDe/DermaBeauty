@@ -1,0 +1,100 @@
+{% extends 'front_base.html.twig' %}
+
+
+{% block title %}ordonnance{% endblock %}
+
+{% block body %}
+
+    <center><h1>ordonnance</h1></center>
+
+    <div class="card-body">
+        <div class="table-responsive">
+            {% for ordo in conseils %}
+                {% if app.user.email == ordo.email %}
+
+            <div class="card-body">
+                <div class="table-responsive">
+
+                    <table class="table table-bordered"  width="100%" cellspacing="0">
+
+                        <thead>
+                        <br>
+
+                        <th>ref</th>
+                        <th>remarques</th>
+                        <th>date redaction</th>
+                        <th>date expiration</th>
+                        <th>nom_derma</th>
+                        <th>reaction</th>
+                        <th>imprimer l'ordonnance</th>
+
+                        </thead>
+                        <tbody  >
+
+                        <tr>
+                            <td>{{ ordo.reference }}</td>
+                            <td>{{ ordo.remarques }}</td>
+                            <td>{{ ordo.datered|date("Y/m/d")}}</td>
+                            <td>{{ ordo.datelimite|date("Y/m/d") }}</td>
+                            <td>{{ ordo.nomderma }}</td>
+                            <td>
+                                <a href="{{ path('conseil_like',{'reference':ordo.reference}) }}" class="btn btn-link js-like" >
+                                    {% if app.user and ordo.islikedByUser(app.user) %}
+                                        <i class="fas fa-thumbs-up"></i>
+                                        {% else %}
+                                        <i class="far fa-thumbs-up"></i>
+                                    {% endif %}
+                                    <span class="js-likes">{{ ordo.likes | length }}</span>
+                                    <span class="js-label">j'aime</span>
+                                </a>
+                            </td>
+                            <td> <a href="{{ path('PDF_O',{'reference':ordo.reference}) }}"class="btn btn-warning btn-circle">pdf</a></td>
+
+                        </tr>
+
+                        </tbody>
+                    </table>
+        </div>
+    </div>
+                     {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+
+{% endblock %}
+{% block javascripts %}
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        function  onClickBtnLike(){
+            event.preventDefault();
+            const url = this.href;
+            const spanCount = this.querySelector('span.js-likes');
+            const icone=this.querySelector('i');
+            axios.get(url).then (function (response)
+            {
+                const likes = response.data.likes;
+                spanCount.textContent = likes;
+                if (icone.classList.contains('fas'))
+                {
+                    icone.classList.replace('fas','far');
+                }
+                else
+                {
+                    icone.classList.replace('far','fas');
+                }
+
+            }).catch(function (error){
+                if (error.response.status===403){
+                    window.alert("vous ne pouvez pas faire un like")
+                } else {
+                    window.alert("une erreur s'est produite");
+                }
+            });
+        }
+        document.querySelectorAll('a.js-like').forEach(function(link){
+            link.addEventListener('click',onClickBtnLike);
+        })
+    </script>
+
+{% endblock %}

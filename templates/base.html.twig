@@ -1,0 +1,129 @@
+<meta charset="UTF-8">
+<title>{% block title %}{% endblock %}</title>
+
+<link rel="stylesheet" type="text/css" href="{{asset('front/styles/bootstrap4/bootstrap.min.css') }}">
+<link href="{{ asset('front/plugins/font-awesome-4.7.0/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="{{asset('front/plugins/OwlCarousel2-2.2.1/owl.carousel.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('front/plugins/OwlCarousel2-2.2.1/owl.theme.default.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('front/plugins/OwlCarousel2-2.2.1/animate.css') }}">
+
+{% block stylesheets %}
+
+{% endblock %}
+
+</head>
+<body>
+<div class="super_container">
+    <header>	<div class="main_nav_container">
+            <div class="logo_container">
+                <a href="#" style=""><span>dermabeauty</span></a>
+            </div>
+            <div class="container">
+                <div class="row">
+
+
+                    <div class="col-lg-12 text-right">
+
+                        <nav class="navbar">
+                            <ul class="navbar_menu">
+                                <li><a href="#">accueil</a></li>
+                                <li><a href="#">centres</a></li>
+                                <li><a href="#">forum</a></li>
+                                <li><a href="#">ordonnances</a></li>
+                                {% if not app.user%}
+                                    <li><a href="">connection</a></li>
+                                {% else %}
+                                    <li><a href="#">hi {{ app.user.email }}</a></li>
+                                    <li><a href="">déconnection</a></li>
+                                {% endif %}
+
+
+
+                            </ul>
+                            <ul class="navbar_user">
+                                <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i></a></li>
+                                <li class="checkout">
+                                    <a href="#">
+                                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                        <span id="checkout_items" class="checkout_items">0</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" id="NavBarDropDownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="">
+                                        <i class="fa fa-bell" aria-hidden="true"></i>
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="NavBarDropDownMenuLink">
+                                        <a class="dropdown-item count" href="#" >ok</a>
+                                    </div>
+                    </div>
+
+
+
+                    </li>
+
+
+
+                    </ul>
+
+                    <div class="hamburger_container">
+                        <i class="fa fa-bars" aria-hidden="true"></i>
+                    </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+</div>
+
+
+</header>
+{% block body %}{% endblock %}
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class=" justify-content-center text-center">
+                    <ul class="footer_nav">
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="contact.html">Contact us</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="footer_social d-flex flex-row align-items-center justify-content-lg-end justify-content-center">
+                    <ul>
+                        <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                        <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                        <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                        <li><a href="#"><i class="fa fa-skype" aria-hidden="true"></i></a></li>
+                        <li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="footer_nav_container">
+                    <div class="cr">©2018 All Rights Reserverd. Template by <a href="#">Colorlib</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+
+
+<script src="{{ asset('front/js/jquery-3.2.1.min.js') }}"></script>
+<script src="{{ asset('front/styles/bootstrap4/popper.js') }}"></script>
+<script src="{{ asset('front/styles/bootstrap4/bootstrap.min.js') }}"></script>
+<script src="{{ asset('front/plugins/Isotope/isotope.pkgd.min.js') }}"></script>
+<script src="{{ asset('front/plugins/OwlCarousel2-2.2.1/owl.carousel.js') }}"></script>
+<script src="{{ asset('front/plugins/easing/easing.js') }}"></script>
+{% block javascripts %}
+
+
+{% endblock %}
+
+</body>
+</html>

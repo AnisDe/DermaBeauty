@@ -1,0 +1,19 @@
+{% extends 'back_base.html.twig' %}
+{% block title %} Ajouter Categories Dermatologues{% endblock %}
+{% block body %}
+    {{ form_start (form,{'attr': {'novalidate': 'novalidate'}}) }}
+<h1>Ajouter Categories Dermatologue  </h1>
+
+    {{ form_label(form.ref,"reference") }}
+    {{ form_widget(form.ref) }}
+
+
+    {{ form_label(form.localisation,"localisation") }}
+    {{ form_widget(form.localisation) }}
+
+
+    {{ form_label(form.nomCat,"Nom Categorie ") }}
+    {{ form_widget(form.nomCat) }}
+
+    {{ form_end(form) }}
+{% endblock %}

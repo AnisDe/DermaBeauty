@@ -1,0 +1,27 @@
+{% for c in centres %}
+    <div class="container ">
+        <div class="col-lg-5">
+            <div class="product_details">
+                <div class="product_details_title">
+                    <h2>{{ c.nom }}</h2>
+                    <h4>{{ c.email }}</h4>
+                    <p>{{ c.description|length > 50 ? c.description|slice(0, 25) ~ '...' : c.description }}</p>
+                </div>
+                <p>ouvre à <strong><span
+                                style="color: red">{{ c.horaire ? c.horaire|date('H:i:s') : '' }}</span></strong>
+                </p>
+
+
+                <a href="{{ path('centre_show', {'id': c.id}) }}"> <span>More info</span></a>
+
+            </div>
+            <br> <br>
+
+
+
+        </div>
+    </div>
+
+
+{% endfor %}
+   

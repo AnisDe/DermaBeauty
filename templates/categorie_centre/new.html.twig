@@ -1,0 +1,14 @@
+{% extends 'back_base.html.twig' %}
+
+
+
+{% block body %}
+    <!DOCTYPE html>
+
+    <title>New CategorieCentre</title>
+    <h1>Create new CategorieCentre</h1>
+
+    {{ include('categorie_centre/_form.html.twig') }}
+
+    <a href="{{ path('categorie_centre_index') }}">back to list</a>
+{% endblock %}
